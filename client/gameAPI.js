@@ -1,127 +1,32 @@
 /**
- * Client-side Game API Handler
- * Handles all communication with the server for game state
+ * DUMMY Game API Handler
+ *
+ * This is a temporary file to prevent the game from crashing on GitHub Pages.
+ * It creates a fake 'gameAPI' object with empty functions so that the
+ * rest of the game code doesn't fail when it tries to call them.
+ *
+ * The original file has been disabled because it requires a server,
+ * which doesn't exist on the static GitHub Pages site.
  */
 
-class GameAPI {
+class GameAPI_Dummy {
   constructor() {
-    this.baseUrl = '';
-    this.isServerMode = false;
-    this.gameState = null;
+    console.log("Dummy GameAPI loaded. Server communication is disabled for static site.");
   }
 
+  // This function must exist, but we make it do nothing.
+  // It returns a promise that resolves to null, which is safe.
   async init() {
-    try {
-      const response = await fetch('/api/game/init', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
-      });
-      
-      if (response.ok) {
-        const data = await response.json();
-        this.isServerMode = true;
-        this.gameState = data.gameState;
-        console.log('Server-side game initialized:', data);
-        return data;
-      }
-    } catch (error) {
-      console.log('Server not available, using client-side mode');
-    }
-    
-    this.isServerMode = false;
     return null;
   }
 
-  async getGameState() {
-    if (!this.isServerMode) return null;
-    
-    try {
-      const response = await fetch('/api/game/state');
-      if (response.ok) {
-        const data = await response.json();
-        this.gameState = data.gameState;
-        return data.gameState;
-      }
-    } catch (error) {
-      console.error('Failed to get game state:', error);
-    }
-    return null;
-  }
-
-  async getAvailableZones() {
-    if (!this.isServerMode) return null;
-    
-    try {
-      const response = await fetch('/api/game/zones');
-      if (response.ok) {
-        const data = await response.json();
-        return data.zones;
-      }
-    } catch (error) {
-      console.error('Failed to get zones:', error);
-    }
-    return null;
-  }
-
-  async teleportToZone(zoneId) {
-    if (!this.isServerMode) return null;
-    
-    try {
-      const response = await fetch('/api/game/teleport', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ zoneId })
-      });
-      
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Server teleport response:', data);
-        return data;
-      } else {
-        const error = await response.json();
-        console.error('Teleport failed:', error);
-      }
-    } catch (error) {
-      console.error('Failed to teleport:', error);
-    }
-    return null;
-  }
-
-  async movePlayer(deltaQ, deltaR) {
-    if (!this.isServerMode) return null;
-    
-    try {
-      const response = await fetch('/api/game/move', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ deltaQ, deltaR })
-      });
-      
-      if (response.ok) {
-        const data = await response.json();
-        return data;
-      }
-    } catch (error) {
-      console.error('Failed to move player:', error);
-    }
-    return null;
-  }
-
-  async getCurrentZone() {
-    if (!this.isServerMode) return null;
-    
-    try {
-      const response = await fetch('/api/game/current-zone');
-      if (response.ok) {
-        const data = await response.json();
-        return data.zone;
-      }
-    } catch (error) {
-      console.error('Failed to get current zone:', error);
-    }
-    return null;
-  }
+  // All other functions are empty and do nothing.
+  async getGameState() { return null; }
+  async getAvailableZones() { return null; }
+  async teleportToZone(zoneId) { return null; }
+  async movePlayer(deltaQ, deltaR) { return null; }
+  async getCurrentZone() { return null; }
 }
 
-// Global instance
-window.gameAPI = new GameAPI();
+// Create the global instance so the rest of the game doesn't crash
+window.gameAPI = new GameAPI_Dummy();
