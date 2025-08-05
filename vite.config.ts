@@ -1,17 +1,20 @@
-// vite.config.ts (Final Version for Deployment)
-
+// vite.config.ts (Corrected and Simplified)
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import path from 'path';
 
 export default defineConfig({
-  root: path.resolve(import.meta.dirname, 'client'),
+  // This tells Vite that your project's code is in the 'client' folder.
+  root: 'client',
+
   plugins: [react()],
-  base: '/Gemgemgemgame/', // IMPORTANT: I changed this to match your likely repo name. If your GitHub repo has a different name, change it here.
+
+  // This is the critical line that tells Vite your GitHub pages URL.
+  base: '/Gemgemgemgame/',
 
   build: {
-    // Build output will be in 'client/dist'. This is standard.
-    outDir: path.resolve(import.meta.dirname, 'client', 'dist'),
+    // This tells Vite to put the final built files into a 'dist' folder
+    // inside the 'client' folder. The path will be 'client/dist'.
+    outDir: 'dist',
     emptyOutDir: true,
   },
 });
